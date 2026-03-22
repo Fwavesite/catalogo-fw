@@ -13,6 +13,12 @@ const productsData = [
     name: "Product 2",
     price: 15,
     image: "https://via.placeholder.com/100"
+  },
+  {
+    id: 3,
+    name: "Product 3",
+    price: 20,
+    image: "https://via.placeholder.com/100"
   }
 ];
 
@@ -34,7 +40,7 @@ export default function App() {
     });
   };
 
-  // 🔥 calcular total
+  // Calcular total
   const total = Object.keys(cart).reduce((sum, id) => {
     const product = productsData.find(p => p.id === Number(id));
     return sum + product.price * cart[id];
@@ -44,14 +50,14 @@ export default function App() {
     <div className="container">
       <h1>Order Catalog</h1>
 
+      {/* Productos */}
       {productsData.map((product) => (
-        <div className="product" key={product.id}>
-          <img src={product.image} />
-          <div className="info">
+        <div className="product-card" key={product.id}>
+          <img src={product.image} alt={product.name} />
+          <div className="product-info">
             <h2>{product.name}</h2>
             <p>${product.price}</p>
-
-            <div className="controls">
+            <div className="product-controls">
               <button onClick={() => removeProduct(product.id)}>-</button>
               <span>{cart[product.id] || 0}</span>
               <button onClick={() => addProduct(product.id)}>+</button>
@@ -60,8 +66,8 @@ export default function App() {
         </div>
       ))}
 
-      {/* 🛒 CARRITO */}
-      <div className="cart">
+      {/* Carrito */}
+      <div className="cart-card">
         <h2>Cart</h2>
 
         {Object.keys(cart).length === 0 && <p>No items yet</p>}
@@ -71,7 +77,7 @@ export default function App() {
           if (!cart[id]) return null;
 
           return (
-            <div key={id} className="cart-item">
+            <div key={id} className="cart-item-card">
               <span>{product.name}</span>
               <span>x{cart[id]}</span>
               <span>${product.price * cart[id]}</span>
@@ -82,12 +88,12 @@ export default function App() {
         <h3>Total: ${total}</h3>
       </div>
 
-      {/* FORM */}
+      {/* Formulario */}
       <div className="form">
         <h2>Your Info</h2>
-        <input placeholder="Name" />
-        <input placeholder="Address" />
-        <button className="submit">Submit Order</button>
+        <input placeholder="Nombre" />
+        <input placeholder="Instagram Username" />
+        <button className="Enviar">Submit Order</button>
       </div>
     </div>
   );
