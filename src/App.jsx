@@ -34,6 +34,12 @@ export default function App() {
     });
   };
 
+  // 🔥 calcular total
+  const total = Object.keys(cart).reduce((sum, id) => {
+    const product = productsData.find(p => p.id === Number(id));
+    return sum + product.price * cart[id];
+  }, 0);
+
   return (
     <div className="container">
       <h1>Order Catalog</h1>
@@ -54,6 +60,29 @@ export default function App() {
         </div>
       ))}
 
+      {/* 🛒 CARRITO */}
+      <div className="cart">
+        <h2>Cart</h2>
+
+        {Object.keys(cart).length === 0 && <p>No items yet</p>}
+
+        {Object.keys(cart).map((id) => {
+          const product = productsData.find(p => p.id === Number(id));
+          if (!cart[id]) return null;
+
+          return (
+            <div key={id} className="cart-item">
+              <span>{product.name}</span>
+              <span>x{cart[id]}</span>
+              <span>${product.price * cart[id]}</span>
+            </div>
+          );
+        })}
+
+        <h3>Total: ${total}</h3>
+      </div>
+
+      {/* FORM */}
       <div className="form">
         <h2>Your Info</h2>
         <input placeholder="Name" />
